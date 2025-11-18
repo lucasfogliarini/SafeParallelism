@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/workflows/build-and-test.yml" />
+  </Folder>
+  <Project Path="SafeParallelism/SafeParallelism.csproj" />
+</Solution>
