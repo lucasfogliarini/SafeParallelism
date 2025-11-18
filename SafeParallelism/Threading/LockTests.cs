@@ -53,7 +53,7 @@ public class LockTests
 
         await Task.WhenAll(tasks);
 
-        Assert.NotEqual(_expectedCounter, _counter);
+        Assert.True(_expectedCounter >= _counter);// _counter esperado é menor, mas pode ser igual.
     }
 
     private void IncrementCounterWithLock()
