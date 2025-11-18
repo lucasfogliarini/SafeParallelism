@@ -40,16 +40,17 @@ public class ConcurrentlyAsyncTests
     static async Task<Breakfast> PrepareBreakfastConcurrentlyAsync()
     {
         Task<Egg> eggTask = FryEggsAsync();
-        Task<Coffee> coffeeTask = MakeCoffeAsync();
+        Task<Coffee> coffeeTask = MakeCoffeeAsync();
 
-        var egg = await eggTask;
-        var coffee = await coffeeTask;
-        return new Breakfast(egg, coffee);
+        await Task.WhenAll(eggTask, coffeeTask);
+
+        return new Breakfast(await eggTask, await coffeeTask);
     }
+
     static async Task<Breakfast> PrepareBreakfastSequentiallyAsync()
     {
         Egg egg = await FryEggsAsync();
-        Coffee coffee = await MakeCoffeAsync();
+        Coffee coffee = await MakeCoffeeAsync();
         return new Breakfast(egg, coffee);
     }
     private static async Task<Egg> FryEggsAsync()
@@ -57,7 +58,7 @@ public class ConcurrentlyAsyncTests
         await Task.Delay(1000);
         return new Egg();
     }
-    private static async Task<Coffee> MakeCoffeAsync()
+    private static async Task<Coffee> MakeCoffeeAsync()
     {
         await Task.Delay(1000);
 
